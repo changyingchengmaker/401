@@ -237,13 +237,13 @@ def main():
             all_papers.extend(test_papers)
             
             # 获取第3-10页
-            for page in range(3, 11):
+            for pages in range(3, 58):
                 print(f"\n{'-' * 40}")
-                html = fetch_page(page=page, college=college)
+                html = fetch_page(page=pages, college=college)
                 
                 if html:
                     papers = parse_papers(html)
-                    print(f"第{page}页解析出 {len(papers)} 篇论文")
+                    print(f"第{pages}页解析出 {len(papers)} 篇论文")
                     
                     if papers:
                         all_papers.extend(papers)
@@ -251,7 +251,7 @@ def main():
                     # 暂停一下，避免请求过快
                     time.sleep(1)
                 else:
-                    print(f"第{page}页获取失败")
+                    print(f"第{pages}页获取失败")
             
             # 保存所有结果
             if all_papers:
@@ -262,7 +262,7 @@ def main():
                 all_papers.sort(key=lambda x: x['日期'], reverse=True)
                 
                 # 保存到CSV
-                save_to_csv(all_papers)
+                save_to_csv(all_papers, filename="运输工程学院_论文列表12.csv")
                 
                 # 显示统计信息
                 authors = set(p['作者'] for p in all_papers)
